@@ -7,5 +7,17 @@ app = Celery(
     include=['worker.tasks']
 )
 
+app.conf.task_routes = {
+    'worker.tasks.add': {
+        'queue': 'queue2'
+    },
+    'worker.tasks.mul': {
+        'queue': 'queue2'
+    },
+    'worker.tasks.xsum': {
+        'queue': 'queue2'
+    }
+}
+
 if __name__ == '__main__':
     app.start()

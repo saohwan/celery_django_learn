@@ -34,3 +34,23 @@ def p2():
 def p3():
     time.sleep(5)
     return
+
+
+@shared_task(queue='celery')
+def sleep_task():
+    time.sleep(10)
+    return
+
+
+# Synchronous Task
+def sync_task():
+    result = sleep_task.apply_async()
+    print("waiting...")
+    print(result.get())
+
+
+# Asynchronous Task
+def async_task():
+    result = sleep_task.apply_async()
+    print("Not wadditing...")
+    print(result.task_id)
